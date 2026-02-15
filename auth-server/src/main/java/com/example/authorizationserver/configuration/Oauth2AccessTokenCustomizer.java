@@ -23,8 +23,9 @@ public class Oauth2AccessTokenCustomizer implements OAuth2TokenCustomizer<JwtEnc
                 User user = (User) principal;
 
                 Set<String> roles = AuthorityUtils.authorityListToSet(user.getAuthorities()).stream()
-                        .map(c -> c.replaceFirst("^ROLE_", ""))
-                        .collect(Collectors.collectingAndThen(Collectors.toSet(), Collections::unmodifiableSet));
+                        // .map(role -> role.replace("^ROLE_", ""))
+                        .collect(Collectors.collectingAndThen(Collectors.toSet(),
+                                Collections::unmodifiableSet));
                 claims.put("roles", roles);
             });
         }
@@ -32,3 +33,7 @@ public class Oauth2AccessTokenCustomizer implements OAuth2TokenCustomizer<JwtEnc
     }
 
 }
+
+/*
+ * Add role base authorization.
+ */

@@ -25,7 +25,7 @@ public class AuthWebUserDetailService implements UserDetailsService {
         Customer customer = authWebUserRepository.findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException(username));
 
-        List<SimpleGrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(customer.getRole()));
+        List<SimpleGrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("ROLE_" + customer.getRole()));
 
         return new User(customer.getEmail(), customer.getPassword(), authorities);
     }
